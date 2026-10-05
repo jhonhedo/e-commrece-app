@@ -1,11 +1,12 @@
 package com.ecommerce.customer.controller;
 
+import com.ecommerce.customer.dto.CreateCustomerRequest;
+import com.ecommerce.customer.dto.CustomerResponse;
 import com.ecommerce.customer.entity.Customer;
 import com.ecommerce.customer.service.CustomerService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/customers")
@@ -17,9 +18,10 @@ private final CustomerService customerService;
       this.customerService = customerService;
   }
 
+  @ResponseStatus(HttpStatus.CREATED)
   @PostMapping
-  public Customer createCustomer(@RequestBody Customer customer){
-     return customerService.createCustomer(customer);
+  public CustomerResponse createCustomer(@Valid @RequestBody CreateCustomerRequest request){
+     return customerService.createCustomer(request);
   }
 
 }
